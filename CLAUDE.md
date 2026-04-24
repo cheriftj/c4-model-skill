@@ -20,6 +20,8 @@ The skill is authored in **English**. Keep prose, examples, and section headings
 ├── CLAUDE.md                                     # This file — guidance for Claude Code
 ├── .claude-plugin/
 │   └── marketplace.json                          # Claude Code marketplace catalog and plugin manifest (single source of truth)
+├── commands/
+│   └── c4-model.md                               # Slash command /c4-model — explicit invocation of the skill
 ├── .github/
 │   ├── workflows/
 │   │   ├── ci.yml                                # Always-on: lint, JSON validation, shellcheck, link check

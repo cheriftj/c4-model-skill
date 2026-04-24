@@ -7,7 +7,7 @@ A [Claude Code](https://claude.com/claude-code) skill for producing [C4 architec
 
 ## How it works
 
-When you ask for an architecture diagram, the skill first figures out what you're actually doing. Designing a new system from a vague idea is a different job from retro-documenting an existing codebase, which is different again from reviewing someone else's diagram or updating one you already have.
+When you ask for an architecture diagram (or run `/c4-model`), the skill first figures out what you're actually doing. Designing a new system from a vague idea is a different job from retro-documenting an existing codebase, which is different again from reviewing someone else's diagram or updating one you already have.
 
 Once the mode is clear, it runs the matching workflow: a structured dialogue, batches of no more than five questions at a time, with an explicit validation checkpoint at every level. Nothing gets written to disk until you say it's final.
 

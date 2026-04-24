@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 *No changes yet.*
 
+## [1.0.2] - 2026-04-24
+
+### Added
+
+- **Slash command `/c4-model`** via `commands/c4-model.md`. Lets users invoke the skill explicitly instead of relying only on description-triggered activation. The command routes to the right mode based on what follows the invocation (idea, repo path, pasted diagram, prose document), or asks the user to pick if nothing follows. Registered in `marketplace.json` via a new `commands: ["./commands"]` entry.
+
 ## [1.0.1] - 2026-04-24
 
 ### Fixed
@@ -42,6 +48,7 @@ Load-bearing rules encoded in `SKILL.md` and mirrored in `review-checklist.md`:
 - Assumptions stay explicit. Inferences never slip silently into the diagram.
 - Interactive by default. No finalized delivery without explicit user validation.
 
-[Unreleased]: https://github.com/cheriftj/c4-model-skill/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/cheriftj/c4-model-skill/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/cheriftj/c4-model-skill/releases/tag/v1.0.2
 [1.0.1]: https://github.com/cheriftj/c4-model-skill/releases/tag/v1.0.1
 [1.0.0]: https://github.com/cheriftj/c4-model-skill/releases/tag/v1.0.0
