@@ -1,0 +1,42 @@
+# Claude Code — user-specific settings (never commit)
+.claude/settings.local.json
+
+# macOS
+.DS_Store
+._*
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Editor artifacts
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Integration test scratch
+/tmp/
+*.tmp
+c4-model-test-*
+
+# Environment files
+.env
+.env.local
+
+# Node / JS (if tooling is added later)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python (if tooling is added later)
+__pycache__/
+*.py[cod]
+.venv/
+
+# Logs
+*.log
+
+# OS / misc
+.cache/

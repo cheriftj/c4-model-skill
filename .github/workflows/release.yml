@@ -1,0 +1,68 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+# The workflow creates a GitHub Release, so it needs write access to contents.
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Publish GitHub Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          VERSION="${TAG#v}"
+          echo "tag=${TAG}"         >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+          # Treat any tag like v1.2.3-* (rc, alpha, beta, etc.) as a pre-release
+          if [[ "$VERSION" == *"-"* ]]; then
+            echo "prerelease=true"  >> "$GITHUB_OUTPUT"
+          else
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          echo "Releasing tag ${TAG} (version ${VERSION})"
+
+      - name: Extract release notes from CHANGELOG.md
+        run: |
+          VERSION='${{ steps.version.outputs.version }}'
+          awk -v ver="$VERSION" '
+            /^## \[/ {
+              if (in_section) { exit }
+              if (index($0, "[" ver "]") > 0) { in_section = 1; next }
+            }
+            in_section { print }
+          ' CHANGELOG.md > release_notes.md
+
+          if [[ ! -s release_notes.md ]]; then
+            echo "::error::No section '## [${VERSION}]' found in CHANGELOG.md"
+            echo "Available sections:"
+            grep -E '^## \[' CHANGELOG.md || true
+            exit 1
+          fi
+
+          echo "--- release_notes.md preview ---"
+          cat release_notes.md
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            --title "${{ steps.version.outputs.tag }}" \
+            --notes-file release_notes.md \
+            ${{ steps.version.outputs.prerelease == 'true' && '--prerelease' || '' }} \
+            --verify-tag

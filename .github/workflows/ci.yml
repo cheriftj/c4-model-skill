@@ -1,0 +1,114 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel in-progress runs on a branch when a new commit arrives
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  markdown-lint:
+    name: Markdown lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          globs: |
+            **/*.md
+            !tests/claude-code/README.md
+
+  validate-plugin-manifests:
+    name: Validate plugin manifests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: JSON syntax
+        run: |
+          python3 -m json.tool .claude-plugin/marketplace.json > /dev/null
+          python3 -m json.tool .claude-plugin/plugin.json > /dev/null
+      - name: Required fields and consistency
+        run: |
+          python3 - <<'PY'
+          import json, sys
+
+          with open('.claude-plugin/marketplace.json') as f:
+              marketplace = json.load(f)
+          with open('.claude-plugin/plugin.json') as f:
+              plugin = json.load(f)
+
+          # marketplace.json required fields
+          for field in ('name', 'owner', 'plugins'):
+              if field not in marketplace:
+                  sys.exit(f"ERROR: marketplace.json missing required field: {field}")
+          if not isinstance(marketplace['plugins'], list) or not marketplace['plugins']:
+              sys.exit("ERROR: marketplace.json 'plugins' must be a non-empty array")
+          if marketplace['name'] != 'c4-model-skill':
+              sys.exit(f"ERROR: marketplace.json name is '{marketplace['name']}', expected 'c4-model-skill'")
+
+          # plugin.json required fields
+          for field in ('name', 'description', 'version', 'license'):
+              if field not in plugin:
+                  sys.exit(f"ERROR: plugin.json missing required field: {field}")
+          if plugin['name'] != 'c4-model':
+              sys.exit(f"ERROR: plugin.json name is '{plugin['name']}', expected 'c4-model'")
+
+          # Consistency between the two files
+          plugin_entry = next((p for p in marketplace['plugins'] if p.get('name') == 'c4-model'), None)
+          if plugin_entry is None:
+              sys.exit("ERROR: marketplace.json does not list a plugin with name 'c4-model'")
+          if plugin_entry.get('version') != plugin['version']:
+              sys.exit(f"ERROR: version mismatch — marketplace.json says {plugin_entry.get('version')}, plugin.json says {plugin['version']}")
+
+          print('marketplace.json + plugin.json: valid and consistent')
+          PY
+
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run shellcheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: ./tests/claude-code
+          severity: warning
+
+  check-executable:
+    name: Test scripts are executable
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify exec bits
+        run: |
+          set -e
+          for script in \
+            tests/claude-code/run-skill-tests.sh \
+            tests/claude-code/test-c4-model.sh \
+            tests/claude-code/test-c4-model-integration.sh
+          do
+            if [[ ! -x "$script" ]]; then
+              echo "ERROR: $script is not executable"
+              exit 1
+            fi
+            echo "OK: $script is executable"
+          done
+
+  link-check:
+    name: Markdown link check
+    runs-on: ubuntu-latest
+    # Link checks are allowed to fail — external URLs come and go
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --verbose --max-concurrency 3 './**/*.md'
+          fail: false
