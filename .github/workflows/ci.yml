@@ -25,25 +25,20 @@ jobs:
             !tests/claude-code/README.md
 
   validate-plugin-manifests:
-    name: Validate plugin manifests
+    name: Validate marketplace.json
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: JSON syntax
-        run: |
-          python3 -m json.tool .claude-plugin/marketplace.json > /dev/null
-          python3 -m json.tool .claude-plugin/plugin.json > /dev/null
-      - name: Required fields and consistency
+        run: python3 -m json.tool .claude-plugin/marketplace.json > /dev/null
+      - name: Required fields and plugin entry
         run: |
           python3 - <<'PY'
           import json, sys
 
           with open('.claude-plugin/marketplace.json') as f:
               marketplace = json.load(f)
-          with open('.claude-plugin/plugin.json') as f:
-              plugin = json.load(f)
 
-          # marketplace.json required fields
           for field in ('name', 'owner', 'plugins'):
               if field not in marketplace:
                   sys.exit(f"ERROR: marketplace.json missing required field: {field}")
@@ -52,21 +47,14 @@ jobs:
           if marketplace['name'] != 'c4-model-skill':
               sys.exit(f"ERROR: marketplace.json name is '{marketplace['name']}', expected 'c4-model-skill'")
 
-          # plugin.json required fields
-          for field in ('name', 'description', 'version', 'license'):
-              if field not in plugin:
-                  sys.exit(f"ERROR: plugin.json missing required field: {field}")
-          if plugin['name'] != 'c4-model':
-              sys.exit(f"ERROR: plugin.json name is '{plugin['name']}', expected 'c4-model'")
-
-          # Consistency between the two files
-          plugin_entry = next((p for p in marketplace['plugins'] if p.get('name') == 'c4-model'), None)
-          if plugin_entry is None:
+          entry = next((p for p in marketplace['plugins'] if p.get('name') == 'c4-model'), None)
+          if entry is None:
               sys.exit("ERROR: marketplace.json does not list a plugin with name 'c4-model'")
-          if plugin_entry.get('version') != plugin['version']:
-              sys.exit(f"ERROR: version mismatch — marketplace.json says {plugin_entry.get('version')}, plugin.json says {plugin['version']}")
+          for field in ('name', 'description', 'version', 'source'):
+              if field not in entry:
+                  sys.exit(f"ERROR: plugin entry 'c4-model' missing required field: {field}")
 
-          print('marketplace.json + plugin.json: valid and consistent')
+          print('marketplace.json: valid, plugin entry complete')
           PY
 
   shellcheck:

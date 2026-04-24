@@ -19,8 +19,7 @@ The skill is authored in **English**. Keep prose, examples, and section headings
 ├── CODE_OF_CONDUCT.md                            # Contributor Covenant v2.1 (by reference)
 ├── CLAUDE.md                                     # This file — guidance for Claude Code
 ├── .claude-plugin/
-│   ├── marketplace.json                          # Claude Code marketplace catalog (used by `/plugin marketplace add`)
-│   └── plugin.json                               # Plugin-level metadata (author, keywords, repo URL)
+│   └── marketplace.json                          # Claude Code marketplace catalog and plugin manifest (single source of truth)
 ├── .github/
 │   ├── workflows/
 │   │   ├── ci.yml                                # Always-on: lint, JSON validation, shellcheck, link check
@@ -81,7 +80,7 @@ The review checklist in `review-checklist.md` is the source of truth for what "d
 
 `SKILL.md` starts with YAML frontmatter (`name`, `description`). The `description` is what Claude Code matches against user requests to decide whether to load the skill. It intentionally mixes English primary content with a few French trigger phrases ("modèle C4", "diagramme d'architecture") to widen discoverability. When editing, keep the English-first voice but preserve the French triggers and keep the trigger phrases broad enough to fire proactively on architecture-overview requests.
 
-Keep `.claude-plugin/plugin.json` in sync with the skill's `name` and with the current version (`version` field, following SemVer).
+Keep the plugin entry in `.claude-plugin/marketplace.json` in sync with the skill's `name` and with the current version (`version` field, following SemVer).
 
 ## Validating changes
 

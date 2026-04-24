@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 *No changes yet.*
 
+## [1.0.1] - 2026-04-24
+
+### Fixed
+
+- Removed `.claude-plugin/plugin.json` to resolve a conflict detected by `/doctor`: both `plugin.json` and `marketplace.json` were specifying plugin components, which Claude Code refuses to merge. Following the pattern used by [`anthropics/skills`](https://github.com/anthropics/skills), `marketplace.json` is now the single source of truth for plugin metadata and skill paths. CI's manifest validation job updated accordingly.
+
 ## [1.0.0] - 2026-04-24
 
 First public release.
