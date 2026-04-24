@@ -8,6 +8,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 *No changes yet.*
 
+## [1.0.3] - 2026-04-24
+
+### Added
+
+- **Mode-specific slash commands**: `/c4-design`, `/c4-document-code`, `/c4-document-prose`, `/c4-review`, `/c4-update`. Each skips the router in `SKILL.md` and goes straight to its mode's workflow (`skills/c4-model/mode-<name>.md`). The catch-all `/c4-model` from v1.0.2 is still available for users who want auto-detection. All six commands live under `commands/` and are registered via the `commands: ["./commands"]` entry in `marketplace.json`.
+- **README**: *The 5 modes* table now includes a *Slash command* column; the *How it works* section points at the mode commands for users who already know the mode.
+
 ## [1.0.2] - 2026-04-24
 
 ### Added
@@ -48,7 +55,8 @@ Load-bearing rules encoded in `SKILL.md` and mirrored in `review-checklist.md`:
 - Assumptions stay explicit. Inferences never slip silently into the diagram.
 - Interactive by default. No finalized delivery without explicit user validation.
 
-[Unreleased]: https://github.com/cheriftj/c4-model-skill/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/cheriftj/c4-model-skill/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/cheriftj/c4-model-skill/releases/tag/v1.0.3
 [1.0.2]: https://github.com/cheriftj/c4-model-skill/releases/tag/v1.0.2
 [1.0.1]: https://github.com/cheriftj/c4-model-skill/releases/tag/v1.0.1
 [1.0.0]: https://github.com/cheriftj/c4-model-skill/releases/tag/v1.0.0

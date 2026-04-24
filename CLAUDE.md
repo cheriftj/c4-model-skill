@@ -20,8 +20,13 @@ The skill is authored in **English**. Keep prose, examples, and section headings
 ├── CLAUDE.md                                     # This file — guidance for Claude Code
 ├── .claude-plugin/
 │   └── marketplace.json                          # Claude Code marketplace catalog and plugin manifest (single source of truth)
-├── commands/
-│   └── c4-model.md                               # Slash command /c4-model — explicit invocation of the skill
+├── commands/                                     # Slash commands registered via marketplace.json
+│   ├── c4-model.md                               # /c4-model — auto-detects the mode from the user's message
+│   ├── c4-design.md                              # /c4-design — skip detection, go to Design mode
+│   ├── c4-document-code.md                       # /c4-document-code — Document-code mode
+│   ├── c4-document-prose.md                      # /c4-document-prose — Document-prose mode
+│   ├── c4-review.md                              # /c4-review — Review mode (critique or explain)
+│   └── c4-update.md                              # /c4-update — Update mode
 ├── .github/
 │   ├── workflows/
 │   │   ├── ci.yml                                # Always-on: lint, JSON validation, shellcheck, link check

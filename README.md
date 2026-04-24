@@ -11,6 +11,8 @@ When you ask for an architecture diagram (or run `/c4-model`), the skill first f
 
 Once the mode is clear, it runs the matching workflow: a structured dialogue, batches of no more than five questions at a time, with an explicit validation checkpoint at every level. Nothing gets written to disk until you say it's final.
 
+If you already know which mode you want, a dedicated slash command skips the detection step (`/c4-design`, `/c4-document-code`, `/c4-document-prose`, `/c4-review`, `/c4-update`). See [The 5 modes](#the-5-modes) below.
+
 By default the output is one Markdown document per C4 level (Context, Container, optionally Component) with the diagram embedded as Mermaid. Format and destination are negotiated at the start: Structurizr DSL, PlantUML, or an MCP destination (Notion, Linear, Google Drive) are all on the table.
 
 See [`skills/c4-model/examples/`](./skills/c4-model/examples/) for a filled-out Context + Container pair built from Simon Brown's canonical Internet Banking System.
@@ -40,17 +42,18 @@ cp -r path/to/this-repo/skills/c4-model ~/.claude/skills/
 
 ## The 5 modes
 
-Mode detection is automatic based on the signal in your message.
+Each mode has a dedicated slash command. `/c4-model` auto-detects the mode from your message; the others skip straight to a known workflow.
 
-| Signal | Mode | What it does |
-|---|---|---|
-| Vague idea, no code | **Design** | Framing → Context → Container → optional Component → finalization |
-| You point at a repo | **Document-code** | Quick framing → scan (delegates to an Explore sub-agent on large repos) → review → dialogue → deliver |
-| You paste a README / ADR / spec | **Document-prose** | Extraction → gap-filling dialogue → deliver |
-| You paste a diagram + *"is this good?"* | **Review** | Checklist critique (grouped by severity) or structured narration |
-| You have a C4 + *"add / remove / change X"* | **Update** | Read, clarify the diff, update every affected level |
+| Mode | Slash command | Fires on | Flow |
+|---|---|---|---|
+| **Design** | `/c4-design` | Vague idea, no code | Framing → Context → Container → optional Component → finalization |
+| **Document-code** | `/c4-document-code` | You point at a repo | Quick framing → scan (delegates to an Explore sub-agent on large repos) → review → dialogue → deliver |
+| **Document-prose** | `/c4-document-prose` | You paste a README / ADR / spec | Extraction → gap-filling dialogue → deliver |
+| **Review** | `/c4-review` | You paste a diagram + *"is this good?"* or *"explain this"* | Checklist critique (grouped by severity) or structured narration |
+| **Update** | `/c4-update` | You have a C4 + *"add / remove / change X"* | Read, clarify the diff, update every affected level |
+| *(any / unsure)* | `/c4-model` | Any of the above | Detects the mode from what follows the invocation, then routes |
 
-Supporting diagrams (System Landscape, C4Deployment, C4Dynamic) are offered on explicit request.
+Supporting diagrams (System Landscape, C4Deployment, C4Dynamic) are offered on explicit request from within any mode.
 
 ## Example conversation (Design mode)
 
