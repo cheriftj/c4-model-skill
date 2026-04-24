@@ -2,7 +2,7 @@
 
 A [Claude Code](https://claude.com/claude-code) skill for producing [C4 architecture diagrams](https://c4model.com) (Simon Brown's model), interactively.
 
-[![CI](https://github.com/toujenicherif/c4-model-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/toujenicherif/c4-model-skill/actions/workflows/ci.yml)
+[![CI](https://github.com/cheriftj/c4-model-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/cheriftj/c4-model-skill/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 ## How it works
@@ -20,7 +20,7 @@ See [`skills/c4-model/examples/`](./skills/c4-model/examples/) for a filled-out 
 ### Claude Code plugin marketplace
 
 ```bash
-/plugin marketplace add toujenicherif/c4-model-skill
+/plugin marketplace add cheriftj/c4-model-skill
 /plugin install c4-model@c4-model-skill
 ```
 

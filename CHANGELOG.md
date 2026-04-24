@@ -42,5 +42,5 @@ Load-bearing rules encoded in `SKILL.md` and mirrored in `review-checklist.md`:
 - Assumptions stay explicit. Inferences never slip silently into the diagram.
 - Interactive by default. No finalized delivery without explicit user validation.
 
-[Unreleased]: https://github.com/toujenicherif/c4-model-skill/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/toujenicherif/c4-model-skill/releases/tag/v1.0.0
+[Unreleased]: https://github.com/cheriftj/c4-model-skill/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/cheriftj/c4-model-skill/releases/tag/v1.0.0
