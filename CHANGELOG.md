@@ -6,9 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+*No changes yet.*
+
+## [2.0.0] - 2026-04-24
+
+### BREAKING
+
+- **Plugin renamed from `c4-model` to `c4m`**. The install command is now `/plugin install c4m@c4-model-skill`. Existing installations must uninstall `c4-model@c4-model-skill` and reinstall as `c4m`.
+- **Slash commands renamed** to use the shorter `/c4m:` namespace and shorter mode names. Full mapping:
+  - `/c4-model` → `/c4m:auto`
+  - `/c4-design` → `/c4m:design`
+  - `/c4-document-code` → `/c4m:code`
+  - `/c4-document-prose` → `/c4m:prose`
+  - `/c4-review` → `/c4m:review`
+  - `/c4-update` → `/c4m:update`
+- Command file names inside `commands/` shortened accordingly (`c4-model.md` → `auto.md`, `c4-design.md` → `design.md`, `c4-document-code.md` → `code.md`, `c4-document-prose.md` → `prose.md`, `c4-review.md` → `review.md`, `c4-update.md` → `update.md`).
+
 ### Changed
 
-- **README example conversation** updated to show the `/c4-design` slash command as the trigger (the previous version only showed a natural-language prompt) and a second example added for `/c4-review` demonstrating the critique output format.
+- README example conversations updated to show the `/c4m:*` slash commands as the trigger, and a second example added for `/c4m:review` demonstrating the critique output format.
+
+### Notes
+
+The repository name (`c4-model-skill`), the marketplace name (`c4-model-skill`), and the skill folder (`skills/c4-model/`) remain unchanged. Only the *plugin* identifier inside `marketplace.json` changed, which is what drives the slash-command namespace.
 
 ## [1.0.3] - 2026-04-24
 
@@ -57,7 +77,8 @@ Load-bearing rules encoded in `SKILL.md` and mirrored in `review-checklist.md`:
 - Assumptions stay explicit. Inferences never slip silently into the diagram.
 - Interactive by default. No finalized delivery without explicit user validation.
 
-[Unreleased]: https://github.com/cheriftj/c4-model-skill/compare/v1.0.3...HEAD
+[Unreleased]: https://github.com/cheriftj/c4-model-skill/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/cheriftj/c4-model-skill/releases/tag/v2.0.0
 [1.0.3]: https://github.com/cheriftj/c4-model-skill/releases/tag/v1.0.3
 [1.0.2]: https://github.com/cheriftj/c4-model-skill/releases/tag/v1.0.2
 [1.0.1]: https://github.com/cheriftj/c4-model-skill/releases/tag/v1.0.1

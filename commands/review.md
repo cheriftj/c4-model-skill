@@ -4,7 +4,7 @@ description: Review or explain an existing C4 diagram. Critique by severity (blo
 
 <!-- markdownlint-disable-file MD041 -->
 
-You are handling a `/c4-review` invocation.
+You are handling a `/c4m:review` invocation.
 
 The user wants to **review or explain an existing C4 diagram** (Mermaid, PlantUML, Structurizr DSL, or image-described). This is the `c4-model` skill's **Review mode**.
 
@@ -14,7 +14,7 @@ Load `skills/c4-model/mode-review.md` and pick the sub-mode based on what the us
   1. Walk through `skills/c4-model/review-checklist.md` point by point.
   2. Group remarks by severity: **blocking** (C4 rule violated — missing technology, `BiRel`, bare "Uses"…), **important** (clarity / readability — no legend, no protocol, too dense), **nice-to-have** (style / consistency).
   3. Propose **concrete** corrections (exact label to change, the technology to add), not vague "this needs more detail".
-  4. Offer to apply the corrections — if the user accepts, switch to **Update mode**.
+  4. Offer to apply the corrections — if the user accepts, switch to **Update mode** (`/c4m:update`).
 
 - If the user asked *"explain this"*, *"what does this do?"*, *"narrate it"* — **explanation sub-mode**:
   1. Identify the level (Context, Container, Component, Deployment, Dynamic) and scope.

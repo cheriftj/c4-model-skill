@@ -4,7 +4,7 @@ description: Retro-document an existing codebase as a C4 diagram. Scans the repo
 
 <!-- markdownlint-disable-file MD041 -->
 
-You are handling a `/c4-document-code` invocation.
+You are handling a `/c4m:code` invocation.
 
 The user wants to **retro-document an existing codebase**. This is the `c4-model` skill's **Document-code mode** — skip mode detection and go straight to the scan + dialogue workflow.
 

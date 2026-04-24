@@ -4,7 +4,7 @@ description: Update an existing C4 diagram — add a container, change a flow, a
 
 <!-- markdownlint-disable-file MD041 -->
 
-You are handling a `/c4-update` invocation.
+You are handling a `/c4m:update` invocation.
 
 The user wants to **update an existing C4 diagram**. This is the `c4-model` skill's **Update mode** — often invoked after a `/c4-review` session.
 

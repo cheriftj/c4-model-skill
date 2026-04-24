@@ -7,11 +7,11 @@ A [Claude Code](https://claude.com/claude-code) skill for producing [C4 architec
 
 ## How it works
 
-When you ask for an architecture diagram (or run `/c4-model`), the skill first figures out what you're actually doing. Designing a new system from a vague idea is a different job from retro-documenting an existing codebase, which is different again from reviewing someone else's diagram or updating one you already have.
+When you ask for an architecture diagram (or run `/c4m:auto`), the skill first figures out what you're actually doing. Designing a new system from a vague idea is a different job from retro-documenting an existing codebase, which is different again from reviewing someone else's diagram or updating one you already have.
 
 Once the mode is clear, it runs the matching workflow: a structured dialogue, batches of no more than five questions at a time, with an explicit validation checkpoint at every level. Nothing gets written to disk until you say it's final.
 
-If you already know which mode you want, a dedicated slash command skips the detection step (`/c4-design`, `/c4-document-code`, `/c4-document-prose`, `/c4-review`, `/c4-update`). See [The 5 modes](#the-5-modes) below.
+If you already know which mode you want, a dedicated slash command skips the detection step (`/c4m:design`, `/c4m:code`, `/c4m:prose`, `/c4m:review`, `/c4m:update`). Or invoke `/c4m:auto` and let the router pick. See [The 5 modes](#the-5-modes) below.
 
 By default the output is one Markdown document per C4 level (Context, Container, optionally Component) with the diagram embedded as Mermaid. Format and destination are negotiated at the start: Structurizr DSL, PlantUML, or an MCP destination (Notion, Linear, Google Drive) are all on the table.
 
@@ -23,7 +23,7 @@ See [`skills/c4-model/examples/`](./skills/c4-model/examples/) for a filled-out 
 
 ```bash
 /plugin marketplace add cheriftj/c4-model-skill
-/plugin install c4-model@c4-model-skill
+/plugin install c4m@c4-model-skill
 ```
 
 ### Copy into a single project
@@ -42,25 +42,25 @@ cp -r path/to/this-repo/skills/c4-model ~/.claude/skills/
 
 ## The 5 modes
 
-Each mode has a dedicated slash command. `/c4-model` auto-detects the mode from your message; the others skip straight to a known workflow.
+Each mode has a dedicated slash command. Claude Code namespaces commands under their plugin, so every command is prefixed with `/c4m:`. Use the auto variant if you want the router to pick the mode; use the mode-specific variants to skip detection.
 
 | Mode | Slash command | Fires on | Flow |
 |---|---|---|---|
-| **Design** | `/c4-design` | Vague idea, no code | Framing → Context → Container → optional Component → finalization |
-| **Document-code** | `/c4-document-code` | You point at a repo | Quick framing → scan (delegates to an Explore sub-agent on large repos) → review → dialogue → deliver |
-| **Document-prose** | `/c4-document-prose` | You paste a README / ADR / spec | Extraction → gap-filling dialogue → deliver |
-| **Review** | `/c4-review` | You paste a diagram + *"is this good?"* or *"explain this"* | Checklist critique (grouped by severity) or structured narration |
-| **Update** | `/c4-update` | You have a C4 + *"add / remove / change X"* | Read, clarify the diff, update every affected level |
-| *(any / unsure)* | `/c4-model` | Any of the above | Detects the mode from what follows the invocation, then routes |
+| **Design** | `/c4m:design` | Vague idea, no code | Framing → Context → Container → optional Component → finalization |
+| **Document-code** | `/c4m:code` | You point at a repo | Quick framing → scan (delegates to an Explore sub-agent on large repos) → review → dialogue → deliver |
+| **Document-prose** | `/c4m:prose` | You paste a README / ADR / spec | Extraction → gap-filling dialogue → deliver |
+| **Review** | `/c4m:review` | You paste a diagram + *"is this good?"* or *"explain this"* | Checklist critique (grouped by severity) or structured narration |
+| **Update** | `/c4m:update` | You have a C4 + *"add / remove / change X"* | Read, clarify the diff, update every affected level |
+| *(any / unsure)* | `/c4m:auto` | Any of the above | Detects the mode from what follows the invocation, then routes |
 
 Supporting diagrams (System Landscape, C4Deployment, C4Dynamic) are offered on explicit request from within any mode.
 
 ## Example conversations
 
-### Design mode (via `/c4-design` or a natural prompt)
+### Design mode (via `/c4m:design` or a natural prompt)
 
 ```text
-You:   /c4-design I'm building an event-sourced order management system.
+You:   /c4m:design I'm building an event-sourced order management system.
 
 Claude: Before we draft anything, a few quick questions (max 5):
         1. System name + one-line business intent?
@@ -82,10 +82,10 @@ Claude: Writing docs/architecture/01-context.md and docs/architecture/02-contain
 
 Without the slash command, the same flow is triggered by any architecture-design request (e.g. *"help me design an order management system"*) — the skill's router detects Design mode from the signal.
 
-### Review mode (via `/c4-review`)
+### Review mode (via `/c4m:review`)
 
 ```text
-You:   /c4-review
+You:   /c4m:review
        ```mermaid
        C4Container
            title My API
@@ -108,10 +108,10 @@ Claude: 3 issues, grouped by severity.
         NICE-TO-HAVE
         - Consider a System_Boundary around the API + DB for visual grouping.
 
-        Want me to apply these corrections? That would switch us to /c4-update.
+        Want me to apply these corrections? That would switch us to /c4m:update.
 ```
 
-Other modes (`/c4-document-code`, `/c4-document-prose`, `/c4-update`) follow the same shape: explicit slash command, a short framing dialogue, then the deliverable.
+Other modes (`/c4m:code`, `/c4m:prose`, `/c4m:update`) follow the same shape: explicit slash command, a short framing dialogue, then the deliverable.
 
 ## What makes it honest
 

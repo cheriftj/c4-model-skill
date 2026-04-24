@@ -21,12 +21,12 @@ The skill is authored in **English**. Keep prose, examples, and section headings
 ├── .claude-plugin/
 │   └── marketplace.json                          # Claude Code marketplace catalog and plugin manifest (single source of truth)
 ├── commands/                                     # Slash commands registered via marketplace.json
-│   ├── c4-model.md                               # /c4-model — auto-detects the mode from the user's message
-│   ├── c4-design.md                              # /c4-design — skip detection, go to Design mode
-│   ├── c4-document-code.md                       # /c4-document-code — Document-code mode
-│   ├── c4-document-prose.md                      # /c4-document-prose — Document-prose mode
-│   ├── c4-review.md                              # /c4-review — Review mode (critique or explain)
-│   └── c4-update.md                              # /c4-update — Update mode
+│   ├── auto.md                                   # /c4m:auto — auto-detects the mode from the user's message
+│   ├── design.md                                 # /c4m:design — Design mode (greenfield)
+│   ├── code.md                                   # /c4m:code — Document-code mode (retro-doc from a repo)
+│   ├── prose.md                                  # /c4m:prose — Document-prose mode (retro-doc from README/ADR)
+│   ├── review.md                                 # /c4m:review — Review mode (critique or explain)
+│   └── update.md                                 # /c4m:update — Update mode
 ├── .github/
 │   ├── workflows/
 │   │   ├── ci.yml                                # Always-on: lint, JSON validation, shellcheck, link check

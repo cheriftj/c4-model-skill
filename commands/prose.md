@@ -4,7 +4,7 @@ description: Extract a C4 architecture from prose (README, ADR, spec, meeting tr
 
 <!-- markdownlint-disable-file MD041 -->
 
-You are handling a `/c4-document-prose` invocation.
+You are handling a `/c4m:prose` invocation.
 
 The user wants to **retro-document a system from prose** (README, ADR, functional spec, meeting transcript, Slack thread). This is the `c4-model` skill's **Document-prose mode**.
 

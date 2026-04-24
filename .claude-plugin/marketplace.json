@@ -5,14 +5,14 @@
     "email": "toujeni.cherif@gmail.com"
   },
   "metadata": {
-    "description": "Claude Code marketplace distributing the c4-model skill — interactive C4 architecture diagramming (Simon Brown's model).",
-    "version": "1.0.3"
+    "description": "Claude Code marketplace distributing the c4m plugin — interactive C4 architecture diagramming (Simon Brown's model).",
+    "version": "2.0.0"
   },
   "plugins": [
     {
-      "name": "c4-model",
-      "description": "Claude Code skill for co-building C4 architecture diagrams (Simon Brown's model) interactively. Mode router (design, document-code, review, update). Negotiable format (Mermaid / Structurizr / PlantUML) and destination (filesystem or MCP — Notion, Linear, Drive).",
-      "version": "1.0.3",
+      "name": "c4m",
+      "description": "Interactive C4 architecture diagrams (Simon Brown's model). Slash commands: /c4m:auto, /c4m:design, /c4m:code, /c4m:prose, /c4m:review, /c4m:update. Negotiable format (Mermaid / Structurizr / PlantUML) and destination (filesystem or MCP — Notion, Linear, Drive).",
+      "version": "2.0.0",
       "source": "./",
       "strict": false,
       "skills": [

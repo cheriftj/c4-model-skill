@@ -4,11 +4,11 @@ description: Co-build a C4 architecture diagram (Simon Brown's model) interactiv
 
 <!-- markdownlint-disable-file MD041 -->
 
-You are handling a `/c4-model` invocation. Load the skill at `skills/c4-model/SKILL.md` and follow its workflow.
+You are handling a `/c4m:auto` invocation. Load the skill at `skills/c4-model/SKILL.md` and follow its workflow.
 
 ## What the user may have given you
 
-After `/c4-model`, the user may have passed one of:
+After `/c4m:auto`, the user may have passed one of:
 
 - A short architecture idea or system description → route to **Design mode**.
 - A path to a repository or source code → route to **Document-code mode**. For repos larger than ~50 files or an unfamiliar stack, delegate the initial scan to a sub-agent via the `Agent` tool with `subagent_type: Explore` (see `skills/c4-model/mode-document-code.md` for the scan prompt).

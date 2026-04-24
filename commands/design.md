@@ -4,7 +4,7 @@ description: Design a new system architecture (C4) from scratch via structured d
 
 <!-- markdownlint-disable-file MD041 -->
 
-You are handling a `/c4-design` invocation.
+You are handling a `/c4m:design` invocation.
 
 The user wants to **design a new system architecture** from scratch. This is the `c4-model` skill's **Design mode** — skip the mode-detection step in `skills/c4-model/SKILL.md` and go straight to the Design workflow.
 
