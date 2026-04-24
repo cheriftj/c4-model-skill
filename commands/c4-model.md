@@ -2,6 +2,8 @@
 description: Co-build a C4 architecture diagram (Simon Brown's model) interactively. Detects the mode (design, document-code, document-prose, review, update) and runs the matching workflow.
 ---
 
+<!-- markdownlint-disable-file MD041 -->
+
 You are handling a `/c4-model` invocation. Load the skill at `skills/c4-model/SKILL.md` and follow its workflow.
 
 ## What the user may have given you
