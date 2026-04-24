@@ -55,10 +55,12 @@ Each mode has a dedicated slash command. `/c4-model` auto-detects the mode from 
 
 Supporting diagrams (System Landscape, C4Deployment, C4Dynamic) are offered on explicit request from within any mode.
 
-## Example conversation (Design mode)
+## Example conversations
+
+### Design mode (via `/c4-design` or a natural prompt)
 
 ```text
-You:   I'm building an event-sourced order management system. Can you help me design the architecture?
+You:   /c4-design I'm building an event-sourced order management system.
 
 Claude: Before we draft anything, a few quick questions (max 5):
         1. System name + one-line business intent?
@@ -77,6 +79,39 @@ You:   Finalized, looks good.
 
 Claude: Writing docs/architecture/01-context.md and docs/architecture/02-container.md now.
 ```
+
+Without the slash command, the same flow is triggered by any architecture-design request (e.g. *"help me design an order management system"*) — the skill's router detects Design mode from the signal.
+
+### Review mode (via `/c4-review`)
+
+```text
+You:   /c4-review
+       ```mermaid
+       C4Container
+           title My API
+           Container(api, "API", "Node")
+           ContainerDb(db, "DB")
+           Rel(api, db, "Uses")
+       ```
+
+Claude: 3 issues, grouped by severity.
+
+        BLOCKING
+        - Missing title scope ("My API" doesn't say which system).
+        - Container(db, "DB") has no technology — mandatory on every Container.
+        - Rel(api, db, "Uses") is a bare verb — state the intent and the protocol,
+          e.g. "Reads and writes orders to" with protocol "JDBC".
+
+        IMPORTANT
+        - No legend, no scope/description on the API.
+
+        NICE-TO-HAVE
+        - Consider a System_Boundary around the API + DB for visual grouping.
+
+        Want me to apply these corrections? That would switch us to /c4-update.
+```
+
+Other modes (`/c4-document-code`, `/c4-document-prose`, `/c4-update`) follow the same shape: explicit slash command, a short framing dialogue, then the deliverable.
 
 ## What makes it honest
 

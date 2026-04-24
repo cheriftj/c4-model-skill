@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-*No changes yet.*
+### Changed
+
+- **README example conversation** updated to show the `/c4-design` slash command as the trigger (the previous version only showed a natural-language prompt) and a second example added for `/c4-review` demonstrating the critique output format.
 
 ## [1.0.3] - 2026-04-24
 
