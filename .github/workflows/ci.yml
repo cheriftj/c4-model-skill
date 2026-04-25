@@ -47,12 +47,12 @@ jobs:
           if marketplace['name'] != 'c4-model-skill':
               sys.exit(f"ERROR: marketplace.json name is '{marketplace['name']}', expected 'c4-model-skill'")
 
-          entry = next((p for p in marketplace['plugins'] if p.get('name') == 'c4-model'), None)
+          entry = next((p for p in marketplace['plugins'] if p.get('name') == 'c4m'), None)
           if entry is None:
-              sys.exit("ERROR: marketplace.json does not list a plugin with name 'c4-model'")
+              sys.exit("ERROR: marketplace.json does not list a plugin with name 'c4m'")
           for field in ('name', 'description', 'version', 'source'):
               if field not in entry:
-                  sys.exit(f"ERROR: plugin entry 'c4-model' missing required field: {field}")
+                  sys.exit(f"ERROR: plugin entry 'c4m' missing required field: {field}")
 
           print('marketplace.json: valid, plugin entry complete')
           PY
